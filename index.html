@@ -1,218 +1,515 @@
 <!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Invitación - Adhara cumple 3 años</title>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#FFE9F4;
-      --accent:#FF7CBF;
-      --accent2:#FFC3E8; 
-      --card:#FFF5FA;
-      --shadow: 0 10px 25px rgba(8,30,50,0.12);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:'Baloo 2',system-ui,Arial;background:linear-gradient(180deg,var(--bg),#FFF);}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Adhara cumple 3 años</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FFE9F4;
+            --accent: #FF7CBF;
+            --accent2: #FFC3E8;
+            --card: #FFF5FA;
+            --shadow: 0 10px 25px rgba(8, 30, 50, 0.12);
+        }
 
-    /* container */
-    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
-    .card{width:100%;max-width:980px;background:var(--card);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+        * {
+            box-sizing: border-box
+        }
 
-    /* left: message */
-    .left{padding:36px 40px}
-    h1{margin:0;font-size:36px;color:#2B4865}
-    .subtitle{margin-top:6px;color:#356B8D;font-weight:700}
-    p.lead{font-size:18px;color:#3e5f75;margin:18px 0 8px}
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Baloo 2', system-ui, Arial;
+            background: linear-gradient(180deg, var(--bg), #FFF);
+        }
 
-    .details{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .chip{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;box-shadow:0 6px 18px rgba(255,141,170,0.18)}
+        /* container */
+        .wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px
+        }
 
-    /* RSVP button */
-    .rsvp{margin-top:20px}
-    .btn{display:inline-block;padding:12px 20px;border-radius:14px;background:#4A90E2;color:white;text-decoration:none;font-weight:800;box-shadow:0 10px 20px rgba(74,144,226,0.2);transform:translateY(0);transition:transform .18s}
-    .btn:active{transform:translateY(2px)}
+        .card {
+            width: 100%;
+            max-width: 980px;
+            background: var(--card);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr
+        }
 
-    /* right: carousel */
-    .right{background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));padding:18px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+        /* left: message */
+        .left {
+            padding: 36px 40px
+        }
 
-    /* confetti (simple) */
-    .confetti{position:absolute;inset:0;pointer-events:none}
-    .confetti i{position:absolute;width:10px;height:14px;border-radius:2px;opacity:0.95;transform:translateY(-30vh);animation:drop 3s linear infinite}
-    .confetti i:nth-child(1){left:8%;background:#FF6B6B;animation-delay:0s}
-    .confetti i:nth-child(2){left:22%;background:#FFD93D;animation-delay:.2s}
-    .confetti i:nth-child(3){left:35%;background:#6BCB77;animation-delay:.4s}
-    .confetti i:nth-child(4){left:48%;background:#4D96FF;animation-delay:.6s}
-    .confetti i:nth-child(5){left:62%;background:#FF8DAA;animation-delay:.8s}
-    .confetti i:nth-child(6){left:78%;background:#B39DDB;animation-delay:1s}
-    @keyframes drop{0%{transform:translateY(-20vh) rotate(0) }100%{transform:translateY(110vh) rotate(360deg)}}
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #2B4865
+        }
 
-    /* responsive */
-    @media(max-width:880px){.card{grid-template-columns:1fr}.right{order:2;padding:14px}.left{order:1}}
+        .subtitle {
+            margin-top: 6px;
+            color: #356B8D;
+            font-weight: 700
+        }
 
-    /* footer */
-    .note{margin-top:18px;font-size:13px;color:#7a8b98}
+        p.lead {
+            font-size: 18px;
+            color: #3e5f75;
+            margin: 18px 0 8px
+        }
 
-    /* Carousel styles */
-    .carousel-container{
-      width:100%;
-      max-width:380px;
-      margin:20px auto;
-      position:relative;
-      overflow:hidden;
-      border-radius:20px;
-      box-shadow:0 8px 25px rgba(0,0,0,0.15);
-    }
-    .carousel-track{
-      display:flex;
-      animation:slide 15s infinite;
-    }
-    .carousel-item{
-      min-width:100%;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:15px;
-    }
-    .paw-frame{
-      border:8px solid #FF7CBF;
-      border-radius:25px;
-      padding:8px;
-      background:#FFF5FA;
-      box-shadow:0 0 20px rgba(255, 126, 191, 0.4);
-    }
-    .paw-frame img{ 
-      width:100%; 
-      max-width:300px;
-      height:250px;
-      object-fit:cover;
-      border-radius:18px;
-      display:block;
-    }
+        .details {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
 
-    @keyframes slide{
-      0%{transform:translateX(0)}
-      33%{transform:translateX(-100%)}
-      66%{transform:translateX(-200%)}
-      100%{transform:translateX(0)}
-    }
-    
-    /* Balloons */
-    .balloons{position:absolute;left:18px;top:12px;display:flex;gap:8px}
-    .balloon{width:34px;height:46px;border-radius:50% 50% 50% 50%;background:var(--accent);transform-origin:center bottom;animation:float 4s ease-in-out infinite}
-    .balloon:nth-child(2){background:var(--accent2);animation-delay:.5s}
-    .balloon:nth-child(3){background:#9AE6B4;animation-delay:1s}
-    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
-    
-    /* Decorativos adicionales Skye */
-    .skye-header{ text-align:center; margin-bottom:20px; }
-    .skye-header img{ width:180px; animation:floatSkye 3.5s ease-in-out infinite; }
-    @keyframes floatSkye{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
-    .decor{ position:absolute; pointer-events:none; opacity:0.25; font-size:80px; }
-    .decor.paw1{ top:40px; left:40px; transform:rotate(-20deg); }
-    .decor.paw2{ bottom:40px; right:50px; transform:rotate(30deg); }
-    .decor.heart1{ top:140px; right:30px; color:#FF7CBF; }
-    .decor.heart2{ bottom:140px; left:30px; color:#FFC3E8; }
-    
-    /* Carousel title */
-    .carousel-title {
-      text-align: center;
-      color: #2B4865;
-      margin-bottom: 10px;
-      font-weight: 700;
-      font-size: 22px;
-    }
-  </style>
+        .chip {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            box-shadow: 0 6px 18px rgba(255, 141, 170, 0.18)
+        }
+
+        /* RSVP button */
+        .rsvp {
+            margin-top: 20px
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 14px;
+            background: #4A90E2;
+            color: white;
+            text-decoration: none;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.2);
+            transform: translateY(0);
+            transition: transform .18s
+        }
+
+        .btn:active {
+            transform: translateY(2px)
+        }
+
+        /* right: carousel */
+        .right {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
+            padding: 18px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center
+        }
+
+        /* confetti (simple) */
+        .confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none
+        }
+
+        .confetti i {
+            position: absolute;
+            width: 10px;
+            height: 14px;
+            border-radius: 2px;
+            opacity: 0.95;
+            transform: translateY(-30vh);
+            animation: drop 3s linear infinite
+        }
+
+        .confetti i:nth-child(1) {
+            left: 8%;
+            background: #FF6B6B;
+            animation-delay: 0s
+        }
+
+        .confetti i:nth-child(2) {
+            left: 22%;
+            background: #FFD93D;
+            animation-delay: .2s
+        }
+
+        .confetti i:nth-child(3) {
+            left: 35%;
+            background: #6BCB77;
+            animation-delay: .4s
+        }
+
+        .confetti i:nth-child(4) {
+            left: 48%;
+            background: #4D96FF;
+            animation-delay: .6s
+        }
+
+        .confetti i:nth-child(5) {
+            left: 62%;
+            background: #FF8DAA;
+            animation-delay: .8s
+        }
+
+        .confetti i:nth-child(6) {
+            left: 78%;
+            background: #B39DDB;
+            animation-delay: 1s
+        }
+
+        @keyframes drop {
+            0% {
+                transform: translateY(-20vh) rotate(0)
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg)
+            }
+        }
+
+        /* responsive */
+        @media(max-width:880px) {
+            .card {
+                grid-template-columns: 1fr
+            }
+
+            .right {
+                order: 2;
+                padding: 14px
+            }
+
+            .left {
+                order: 1
+            }
+        }
+
+        /* footer */
+        .note {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #7a8b98
+        }
+
+        /* Carousel styles */
+        .carousel-container {
+            width: 100%;
+            max-width: 380px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: slide 15s infinite;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .paw-frame {
+            border: 8px solid #FF7CBF;
+            border-radius: 25px;
+            padding: 8px;
+            background: #FFF5FA;
+            box-shadow: 0 0 20px rgba(255, 126, 191, 0.4);
+        }
+
+        .paw-frame img {
+            width: 100%;
+            max-width: 300px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 18px;
+            display: block;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0)
+            }
+
+            33% {
+                transform: translateX(-100%)
+            }
+
+            66% {
+                transform: translateX(-200%)
+            }
+
+            100% {
+                transform: translateX(0)
+            }
+        }
+
+        /* Balloons */
+        .balloons {
+            position: absolute;
+            left: 18px;
+            top: 12px;
+            display: flex;
+            gap: 8px
+        }
+
+        .balloon {
+            width: 34px;
+            height: 46px;
+            border-radius: 50% 50% 50% 50%;
+            background: var(--accent);
+            transform-origin: center bottom;
+            animation: float 4s ease-in-out infinite
+        }
+
+        .balloon:nth-child(2) {
+            background: var(--accent2);
+            animation-delay: .5s
+        }
+
+        .balloon:nth-child(3) {
+            background: #9AE6B4;
+            animation-delay: 1s
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-12px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        /* Decorativos adicionales Skye */
+        .skye-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .skye-header img {
+            width: 180px;
+            animation: floatSkye 3.5s ease-in-out infinite;
+        }
+
+        @keyframes floatSkye {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-12px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        .decor {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.25;
+            font-size: 80px;
+        }
+
+        .decor.paw1 {
+            top: 40px;
+            left: 40px;
+            transform: rotate(-20deg);
+        }
+
+        .decor.paw2 {
+            bottom: 40px;
+            right: 50px;
+            transform: rotate(30deg);
+        }
+
+        .decor.heart1 {
+            top: 140px;
+            right: 30px;
+            color: #FF7CBF;
+        }
+
+        .decor.heart2 {
+            bottom: 140px;
+            left: 30px;
+            color: #FFC3E8;
+        }
+
+        /* Carousel title */
+        .carousel-title {
+            text-align: center;
+            color: #2B4865;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        /* Nota especial */
+        .no-rosa {
+            margin: 25px auto;
+            max-width: 520px;
+            text-align: center;
+            background: #FFF5FA;
+            padding: 18px 22px;
+            border-radius: 22px;
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 16px rgba(255, 124, 191, 0.35);
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 16px rgba(255, 124, 191, 0.35);
+            }
+
+            100% {
+                box-shadow: 0 0 24px rgba(255, 124, 191, 0.5);
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="decor paw1">🐾</div>
-  <div class="decor paw2">🐾</div>
-  <div class="decor heart1">💕</div>
-  <div class="decor heart2">💗</div>
+    <div class="decor paw1">🐾</div>
+    <div class="decor paw2">🐾</div>
+    <div class="decor heart1">💕</div>
+    <div class="decor heart2">💗</div>
 
-  <div class="wrap">
-    <section class="card">
-      <div class="left">
-        <div class="skye-header">
-          <img src="SKYE.png" alt="Skye">
-        </div>
-        
-        <div style="display:flex;align-items:center;gap:12px">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 24 24'><path fill='%23FF8DAA' d='M12 2C10.3 2 9 3.3 9 5s1.3 3 3 3 3-1.3 3-3S13.7 2 12 2zM5 7C3.3 7 2 8.3 2 10s1.3 3 3 3 3-1.3 3-3S6.7 7 5 7zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zM7 12c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm10 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zM12 15c-3.3 0-6 2.7-6 6h12c0-3.3-2.7-6-6-6z'/></svg>" alt="paw" width="56" height="56">
-          <div>
-            <h1>¡Estas invitado a mis 3 años!</h1>
-            <div class="subtitle">Con la participación especial de todos los cachorros de Paw Patrol
+    <div class="wrap">
+        <section class="card">
+            <div class="left">
 
-¡No faltes! ¡La misión de cumpleaños necesita tu ayuda!🎉</div>
-          </div>
-        </div>
+                <div style="display:flex;align-items:center;gap:12px">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 24 24'><path fill='%23FF8DAA' d='M12 2C10.3 2 9 3.3 9 5s1.3 3 3 3 3-1.3 3-3S13.7 2 12 2zM5 7C3.3 7 2 8.3 2 10s1.3 3 3 3 3-1.3 3-3S6.7 7 5 7zm14 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zM7 12c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm10 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zM12 15c-3.3 0-6 2.7-6 6h12c0-3.3-2.7-6-6-6z'/></svg>"
+                        alt="paw" width="56" height="56">
+                    <div>
+                        <h1>¡Adhara cumple 3 años con Skye!</h1>
+                        <div class="subtitle">Con la participación especial de todos los cachorros de Paw Patrol
+                            ¡No faltes! ¡La misión del cumpleaños necesita tu ayuda!🎉</div>
+                    </div>
+                </div>
 
-        <p class="lead">Estás invitado a una tarde llena de juegos, risas y aventuras con los personajes favoritos de Adhara.</p>
+                <p class="lead">Estás invitado a una tarde llena de juegos, risas y aventuras con los personajes
+                    favoritos de Adhara.</p>
 
-        <div class="details">
-          <div class="chip">📅 Domingo, 21 de diciembre</div>
-          <div class="chip">⏰ 2:00 PM</div>
-          <div class="chip"><a href="https://maps.app.goo.gl/98PX3heHxoWJKDad6?g_st=aw">📍MOA</a></div>
-        </div>
+                <div class="details">
+                    <div class="chip">📅 Domingo, 21 de diciembre</div>
+                    <div class="chip">⏰ 2:00 PM</div>
+                    <div class="chip"><a href="https://maps.app.goo.gl/98PX3heHxoWJKDad6?g_st=aw">📍MOA</a></div>
+                </div>
 
-        <div class="rsvp">
-          <a class="btn" href="#" id="rsvpBtn">¡Confirmar asistencia!</a>
-        </div>
+                <!-- Nota Especial para los Invitados -->
+                <div class="no-rosa">
+                    <p style="font-size:22px; font-weight:800; color:#D41B8C; margin-bottom:6px;">
+                        🐾 Nota Especial para los Invitados 🐾
+                    </p>
+                    <p style="font-size:18px; color:#A00072; line-height:1.4;">
+                        En esta misión tan especial de Skye,<br>
+                        te pedimos venir con <strong>ropa de cualquier color excepto rosa</strong> 💖✨<br>
+                        ¡Así nuestra cumpleañera Adhara brillará como la verdadera protagonista!
+                    </p>
+                </div>
 
-        <p class="note">Trae tu mejor sonrisa. Si vienes de rosa pasas la noche en la caja.</p>
+                <div class="rsvp">
+                    <a class="btn" href="#" id="rsvpBtn">¡Confirmar asistencia!</a>
+                </div>
 
-      </div>
+                <p class="note">Trae tu mejor sonrisa.</p>
 
-      <div class="right">
-        <div class="balloons">
-          <div class="balloon"></div>
-          <div class="balloon"></div>
-          <div class="balloon"></div>
-        </div>
-
-        <div class="carousel-title">¡Aventuras con Skye!</div>
-        
-        <div class="carousel-container">
-          <div class="carousel-track">
-            <div class="carousel-item">
-              <div class="paw-frame">
-                <img src="Adhara.jpeg" alt="Skye">
-              </div>
             </div>
-            <div class="carousel-item">
-              <div class="paw-frame">
-                <img src="Adhara2.jpeg" alt="Skye">
-              </div>
+
+            <div class="right">
+                <div class="balloons">
+                    <div class="balloon"></div>
+                    <div class="balloon"></div>
+                    <div class="balloon"></div>
+                </div>
+
+                <div class="carousel-title">¡Aventuras con Skye!</div>
+
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-item">
+                            <div class="paw-frame">
+                                <img src="Adhara.jpeg" alt="Skye">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="paw-frame">
+                                <img src="Adhara2.jpeg" alt="Skye">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="paw-frame">
+                                <img src="Adhara3.jpeg" alt="Skye">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="paw-frame">
+                                <img src="ADHARA4.jpeg" alt="Skye">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="paw-frame">
+                                <img src="ADHARA5.jpeg" alt="Skye">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="paw-frame">
+                                <img src="ADHARA6.jpeg" alt="Skye">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="confetti" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+
             </div>
-            <div class="carousel-item">
-              <div class="paw-frame">
-                <img src="Adhara3.jpeg" alt="Skye">
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
+    </div>
 
-        <div class="confetti" aria-hidden="true">
-          <i></i><i></i><i></i><i></i><i></i><i></i>
-        </div>
-
-      </div>
-    </section>
-  </div>
-
-<script>
-  // Pequeña animación y modal simple para confirmar asistencia
-  document.getElementById('rsvpBtn').addEventListener('click', function(e){
-    e.preventDefault();
-    const name = prompt('¿Tu nombre? (para confirmar asistencia)');
-    if(name){
-      alert('¡Gracias, ' + name + '! Hemos registrado tu asistencia. Nos vemos en la celebración 🎉');
-    } else {
-      alert('Si cambias de opinión, vuelve a presionar "Confirmar asistencia".');
-    }
-  });
-</script>
+    <script>
+        // Pequeña animación y modal simple para confirmar asistencia
+        document.getElementById('rsvpBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            const name = prompt('¿Tu nombre? (para confirmar asistencia)');
+            if (name) {
+                alert('¡Gracias, ' + name + '! Hemos registrado tu asistencia. Nos vemos en la celebración 🎉');
+            } else {
+                alert('Si cambias de opinión, vuelve a presionar "Confirmar asistencia".');
+            }
+        });
+    </script>
 
 </body>
+
 </html>
