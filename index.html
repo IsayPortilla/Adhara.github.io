@@ -111,10 +111,98 @@
             transition: transform .18s;
             text-align: center;
             width: 100%;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:active {
             transform: translateY(2px);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #2B4865;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #356B8D;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #E0E7FF;
+            border-radius: 10px;
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-confirm {
+            background: #6BCB77;
+            flex: 2;
+        }
+
+        .btn-cancel {
+            background: #FF6B6B;
+            flex: 1;
         }
 
         /* right: carousel */
@@ -500,6 +588,46 @@
     <div class="decor heart1">💕</div>
     <div class="decor heart2">💗</div>
 
+    <!-- Modal para confirmación -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🐾 Confirmar Asistencia 🐾</h2>
+            <form id="confirmationForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="invitados">Número de invitados:</label>
+                    <select id="invitados" name="invitados" required>
+                        <option value="1">1 persona</option>
+                        <option value="2" selected>2 personas</option>
+                        <option value="3">3 personas</option>
+                        <option value="4">4 personas</option>
+                        <option value="5">5 personas</option>
+                        <option value="6+">6 o más personas</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mensaje">Mensaje especial (opcional):</label>
+                    <input type="text" id="mensaje" name="mensaje" placeholder="Ej: ¡No puedo esperar para la fiesta!">
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-confirm">Confirmar Asistencia</button>
+                    <button type="button" class="btn btn-cancel" onclick="closeModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="wrap">
         <section class="card">
             <div class="left">
@@ -536,7 +664,7 @@
                 </div>
 
                 <div class="rsvp">
-                    <a class="btn" href="#" id="rsvpBtn">¡Confirmar asistencia!</a>
+                    <button class="btn" id="rsvpBtn">¡Confirmar asistencia!</button>
                 </div>
 
                 <p class="note">Trae tu mejor sonrisa.</p>
@@ -596,16 +724,217 @@
     </div>
 
     <script>
-        // Pequeña animación y modal simple para confirmar asistencia
-        document.getElementById('rsvpBtn').addEventListener('click', function (e) {
+        // Elementos del DOM
+        const rsvpBtn = document.getElementById('rsvpBtn');
+        const modal = document.getElementById('confirmationModal');
+        const form = document.getElementById('confirmationForm');
+
+        // Función para abrir el modal
+        rsvpBtn.addEventListener('click', function() {
+            modal.style.display = 'flex';
+        });
+
+        // Función para cerrar el modal
+        function closeModal() {
+            modal.style.display = 'none';
+            form.reset();
+        }
+
+        // Función para generar y descargar el archivo TXT
+        function generateTXTFile(data) {
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const filename = `confirmacion_${data.nombre.replace(/\s+/g, '_')}_${timestamp}.txt`;
+            
+            let content = `CONFIRMACIÓN DE ASISTENCIA - CUMPLEAÑOS DE ADHARA\n`;
+            content += `===================================================\n\n`;
+            content += `Fecha de confirmación: ${new Date().toLocaleString('es-ES')}\n`;
+            content += `Nombre: ${data.nombre}\n`;
+            content += `Teléfono: ${data.telefono}\n`;
+            content += `Número de invitados: ${data.invitados}\n`;
+            content += `Mensaje: ${data.mensaje || 'Sin mensaje adicional'}\n\n`;
+            content += `Detalles del evento:\n`;
+            content += `- Fecha: Domingo, 21 de diciembre\n`;
+            content += `- Hora: 2:00 PM\n`;
+            content += `- Lugar: MOA\n\n`;
+            content += `Nota: Recuerda vestir con cualquier color excepto rosa.\n`;
+            content += `¡Gracias por confirmar! 🎉\n`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Función para guardar en localStorage
+        function saveToLocalStorage(data) {
+            try {
+                // Obtener confirmaciones existentes
+                let confirmaciones = JSON.parse(localStorage.getItem('confirmacionesCumpleAdhara')) || [];
+                
+                // Agregar nueva confirmación
+                const nuevaConfirmacion = {
+                    ...data,
+                    fechaConfirmacion: new Date().toISOString(),
+                    id: Date.now()
+                };
+                
+                confirmaciones.push(nuevaConfirmacion);
+                
+                // Guardar en localStorage
+                localStorage.setItem('confirmacionesCumpleAdhara', JSON.stringify(confirmaciones));
+                
+                console.log('Confirmación guardada en localStorage:', nuevaConfirmacion);
+                
+                // También guardar en archivo maestro
+                updateMasterFile(confirmaciones);
+                
+            } catch (error) {
+                console.error('Error al guardar en localStorage:', error);
+            }
+        }
+
+        // Función para actualizar el archivo maestro
+        function updateMasterFile(confirmaciones) {
+            let masterContent = `LISTA MAESTRA DE CONFIRMACIONES - CUMPLEAÑOS ADHARA 3 AÑOS\n`;
+            masterContent += `=============================================================\n\n`;
+            masterContent += `Total de confirmaciones: ${confirmaciones.length}\n`;
+            masterContent += `Fecha de actualización: ${new Date().toLocaleString('es-ES')}\n\n`;
+            
+            confirmaciones.forEach((conf, index) => {
+                masterContent += `CONFIRMACIÓN ${index + 1}:\n`;
+                masterContent += `-------------------\n`;
+                masterContent += `Nombre: ${conf.nombre}\n`;
+                masterContent += `Teléfono: ${conf.telefono}\n`;
+                masterContent += `Invitados: ${conf.invitados}\n`;
+                masterContent += `Mensaje: ${conf.mensaje || 'Sin mensaje'}\n`;
+                masterContent += `Fecha de confirmación: ${new Date(conf.fechaConfirmacion).toLocaleString('es-ES')}\n`;
+                masterContent += `ID: ${conf.id}\n\n`;
+            });
+            
+            const blob = new Blob([masterContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'lista_confirmaciones_adhara.txt';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Función para enviar por WhatsApp
+        function sendWhatsApp(data) {
+            const phoneNumber = "5211234567890"; // REEMPLAZA CON TU NÚMERO (formato internacional sin +)
+            
+            // Crear mensaje para WhatsApp
+            let message = `🎉 *CONFIRMACIÓN DE ASISTENCIA* 🎉\n\n`;
+            message += `*Nombre:* ${data.nombre}\n`;
+            message += `*Teléfono:* ${data.telefono}\n`;
+            message += `*Invitados:* ${data.invitados}\n`;
+            message += `*Mensaje:* ${data.mensaje || 'Sin mensaje adicional'}\n\n`;
+            message += `_Confirmado el: ${new Date().toLocaleString('es-ES')}_\n\n`;
+            message += `¡Gracias por confirmar! 🐾`;
+            
+            // Codificar el mensaje para URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Crear enlace de WhatsApp
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Abrir WhatsApp en una nueva ventana
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Manejar el envío del formulario
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = prompt('¿Tu nombre? (para confirmar asistencia)');
-            if (name) {
-                alert('¡Gracias, ' + name + '! Hemos registrado tu asistencia. Nos vemos en la celebración 🎉');
-            } else {
-                alert('Si cambias de opinión, vuelve a presionar "Confirmar asistencia".');
+            
+            // Obtener datos del formulario
+            const formData = {
+                nombre: document.getElementById('nombre').value.trim(),
+                telefono: document.getElementById('telefono').value.trim(),
+                invitados: document.getElementById('invitados').value,
+                mensaje: document.getElementById('mensaje').value.trim()
+            };
+            
+            // Validaciones básicas
+            if (!formData.nombre || !formData.telefono) {
+                alert('Por favor, completa los campos obligatorios.');
+                return;
+            }
+            
+            // Mostrar mensaje de confirmación
+            alert(`¡Gracias ${formData.nombre}! Tu confirmación ha sido registrada.`);
+            
+            // 1. Generar y descargar archivo TXT individual
+            generateTXTFile(formData);
+            
+            // 2. Guardar en localStorage y generar archivo maestro
+            saveToLocalStorage(formData);
+            
+            // 3. Abrir WhatsApp para enviar confirmación
+            sendWhatsApp(formData);
+            
+            // Cerrar modal y resetear formulario
+            closeModal();
+            
+            // Agregar confeti adicional por confirmación
+            triggerConfetti();
+        });
+
+        // Función para mostrar confeti adicional
+        function triggerConfetti() {
+            const confettiContainer = document.querySelector('.confetti');
+            const colors = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#FF8DAA', '#B39DDB'];
+            
+            for (let i = 0; i < 15; i++) {
+                const confetti = document.createElement('i');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `drop ${1 + Math.random() * 2}s linear forwards`;
+                confettiContainer.appendChild(confetti);
+                
+                // Remover después de la animación
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
             }
         });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        // Botón para descargar lista completa (solo para organizador)
+        // Este botón se puede agregar manualmente si es necesario
+        function downloadFullList() {
+            const confirmaciones = JSON.parse(localStorage.getItem('confirmacionesCumpleAdhara')) || [];
+            if (confirmaciones.length === 0) {
+                alert('No hay confirmaciones registradas.');
+                return;
+            }
+            updateMasterFile(confirmaciones);
+        }
+
+        // Para agregar un botón secreto para descargar la lista completa:
+        // Agrega esto en el HTML si lo necesitas:
+        // <button onclick="downloadFullList()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000; padding: 5px 10px; background: #333; color: white; border: none; border-radius: 5px; font-size: 12px;">Descargar Lista</button>
     </script>
 
 </body>
